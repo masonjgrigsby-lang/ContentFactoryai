@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ContentFactory AI - Create & Monetize Content Automatically</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #7C3AED;
+            --primary-dark: #6D28D9;
+            --primary-light: #8B5CF6;
+            --secondary: #06B6D4;
+            --accent: #10B981;
+            --dark: #1F2937;
+            --darker: #111827;
+            --light: #F9FAFB;
+            --gray: #6B7280;
+            --gray-light: #E5E7EB;
+            --success: #059669;
+            --warning: #D97706;
+            --error: #DC2626;
+            
+            --font-primary: 'Inter', sans-serif;
+            --font-heading: 'Plus Jakarta Sans', sans-serif;
+            
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .nav__logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .logo {
+            width: 32px;
+            height: 32px;
+            background: var(--primary);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .nav__menu {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav__list {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav__link {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav__link:hover {
+            color: var(--primary);
+        }
+
+        .nav__buttons {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav__button--login {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .nav__button--primary {
+            background: var(--primary);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .nav__button--primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .nav__toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .nav__toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--dark);
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 120px 0 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero__container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero__badge {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .hero__title {
+            font-family: var(--font-heading);
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+
+        .gradient-text {
+            background: linear-gradient(45deg, #F59E0B, #EF4444);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero__description {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .hero__stats {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat__number {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .stat__label {
+            font-size: 0.875rem;
+            opacity: 0.8;
+        }
+
+        .hero__buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .button {
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .button--primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .button--primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .button--secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .button--secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .button--outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .button--outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .button--large {
+            padding: 1.25rem 2.5rem;
+            font-size: 1.1rem;
+        }
+
+        /* AI Dashboard */
+        .ai-dashboard {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+        }
+
+        .dashboard__header {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dashboard__tabs {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .tab {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .tab.active {
+            background: rgba(255, 255, 255, 0.2);
+            opacity: 1;
+        }
+
+        .dashboard__content {
+            padding: 1.5rem;
+        }
+
+        .preview-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+        }
+
+        .preview-icon {
+            font-size: 1.25rem;
+        }
+
+        .preview-status {
+            margin-left: auto;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .generating .preview-status {
+            color: var(--warning);
+        }
+
+        .completed .preview-status {
+            color: var(--success);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .section__header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section__header h2 {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--darker);
+        }
+
+        .section__header p {
+            font-size: 1.125rem;
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features__grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature__card {
+            background: var(--light);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature__card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature__icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature__card h3 {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--darker);
+        }
+
+        .feature__list {
+            list-style: none;
+            text-align: left;
+            margin-top: 1.5rem;
+        }
+
+        .feature__list li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .feature__list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 80px 0;
+            background: var(--light);
+        }
+
+        .pricing__grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .pricing__card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .pricing__card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .pricing__card.popular {
+            border: 2px solid var(--primary);
+            transform: scale(1.05);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .pricing__header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .pricing__header h3 {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .pricing__price {
+            margin-bottom: 0.5rem;
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--darker);
+        }
+
+        .period {
+            color: var(--gray);
+            font-size: 1rem;
+        }
+
+        .pricing__features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .pricing__features li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .pricing__features li:last-child {
+            border-bottom: none;
+        }
+
+        .pricing__button {
+            width: 100%;
+            justify-content: center;
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .cta__content h2 {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta__content p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .cta__buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--darker);
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer__content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer__logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer__section h4 {
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .footer__section ul {
+            list-style: none;
+        }
+
+        .footer__section ul li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer__section a {
+            color: var(--gray-light);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer__section a:hover {
+            color: white;
+        }
+
+        .footer__bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #374151;
+            color: var(--gray);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal__content {
+            background: white;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .modal__close {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+        }
+
+        .payment-loading {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .hero__container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+                text-align: center;
+            }
+            
+            .hero__stats {
+                justify-content: center;
+            }
+            
+            .footer__content {
+                grid-template-columns: 1fr 1fr;
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav__menu {
+                position: fixed;
+                top: 70px;
+                right: -100%;
+                width: 80%;
+                height: 100vh;
+                background: white;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 2rem;
+                transition: 0.3s;
+                box-shadow: var(--shadow-lg);
+            }
+            
+            .nav__menu.active {
+                right: 0;
+            }
+            
+            .nav__list {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .nav__buttons {
+                flex-direction: column;
+                width: 100%;
+                gap: 1rem;
+            }
+            
+            .nav__button--primary {
+                text-align: center;
+            }
+            
+            .nav__toggle {
+                display: flex;
+            }
+            
+            .hero__title {
+                font-size: 2.5rem;
+            }
+            
+            .hero__stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .hero__buttons {
+                flex-direction: column;
+            }
+            
+            .features__grid,
+            .pricing__grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .pricing__card.popular {
+                transform: none;
+            }
+            
+            .cta__buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .hero__title {
+                font-size: 2rem;
+            }
+            
+            .section__header h2 {
+                font-size: 2rem;
+            }
+            
+            .footer__content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animation Styles */
+        .feature__card, .pricing__card {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <div class="nav__logo">
+                <div class="logo">AI</div>
+                <span>ContentFactory AI</span>
+            </div>
+            
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list">
+                    <li><a href="#features" class="nav__link">Features</a></li>
+                    <li><a href="#pricing" class="nav__link">Pricing</a></li>
+                    <li><a href="#use-cases" class="nav__link">Use Cases</a></li>
+                    <li><a href="#testimonials" class="nav__link">Testimonials</a></li>
+                </ul>
+                
+                <div class="nav__buttons">
+                    <a href="#" class="nav__button--login">Login</a>
+                    <a href="#pricing" class="nav__button--primary">Start Free Trial</a>
+                </div>
+            </div>
+            
+            <div class="nav__toggle" id="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero__container container">
+            <div class="hero__content">
+                <div class="hero__badge">
+                    <span>🚀 7-Day Free Trial Available</span>
+                </div>
+                <h1 class="hero__title">
+                    Create & Monetize Content
+                    <span class="gradient-text">10X Faster</span> with AI
+                </h1>
+                <p class="hero__description">
+                    Turn AI content creation into passive income. Generate blogs, social media, videos, and more - then monetize through multiple revenue streams automatically.
+                </p>
+                
+                <div class="hero__stats">
+                    <div class="stat">
+                        <span class="stat__number">4,287+</span>
+                        <span class="stat__label">Active Creators</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat__number">$2.1M+</span>
+                        <span class="stat__label">Paid Out</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat__number">98%</span>
+                        <span class="stat__label">Satisfaction Rate</span>
+                    </div>
+                </div>
+                
+                <div class="hero__buttons">
+                    <a href="#pricing" class="button button--primary">Start Free Trial</a>
+                    <a href="#" class="button button--secondary">
+                        <span>▶</span>
+                        Watch Demo
+                    </a>
+                </div>
+            </div>
+            
+            <div class="hero__visual">
+                <div class="ai-dashboard">
+                    <div class="dashboard__header">
+                        <div class="dashboard__tabs">
+                            <span class="tab active">Content Generator</span>
+                            <span class="tab">Monetization</span>
+                            <span class="tab">Analytics</span>
+                        </div>
+                    </div>
+                    <div class="dashboard__content">
+                        <div class="content-preview">
+                            <div class="preview-item generating">
+                                <span class="preview-icon">📝</span>
+                                <span>Blog Post: "AI Marketing Trends 2024"</span>
+                                <span class="preview-status">Generating...</span>
+                            </div>
+                            <div class="preview-item completed">
+                                <span class="preview-icon">🎥</span>
+                                <span>Video Script: Product Review</span>
+                                <span class="preview-status">+$47 earned</span>
+                            </div>
+                            <div class="preview-item completed">
+                                <span class="preview-icon">📱</span>
+                                <span>Social Media Kit (30 posts)</span>
+                                <span class="preview-status">+$129 earned</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section__header">
+                <h2>Everything You Need to Monetize AI Content</h2>
+                <p>From creation to revenue generation - all in one platform</p>
+            </div>
+            
+            <div class="features__grid">
+                <div class="feature__card">
+                    <div class="feature__icon">🤖</div>
+                    <h3>AI Content Generation</h3>
+                    <p>Create blogs, videos, social media posts, emails, and more with our advanced AI models</p>
+                    <ul class="feature__list">
+                        <li>100+ content templates</li>
+                        <li>Multi-language support</li>
+                        <li>Brand voice customization</li>
+                    </ul>
+                </div>
+                
+                <div class="feature__card">
+                    <div class="feature__icon">💸</div>
+                    <h3>Automated Monetization</h3>
+                    <p>Multiple revenue streams without extra work</p>
+                    <ul class="feature__list">
+                        <li>Direct content sales</li>
+                        <li>Subscription packages</li>
+                        <li>Affiliate commissions</li>
+                        <li>Ad revenue sharing</li>
+                    </ul>
+                </div>
+                
+                <div class="feature__card">
+                    <div class="feature__icon">🛒</div>
+                    <h3>Built-in Marketplace</h3>
+                    <p>Sell your AI-generated content directly to businesses</p>
+                    <ul class="feature__list">
+                        <li>Ready-to-use content packages</li>
+                        <li>Automated delivery</li>
+                        <li>Secure payments</li>
+                    </ul>
+                </div>
+                
+                <div class="feature__card">
+                    <div class="feature__icon">📊</div>
+                    <h3>Revenue Analytics</h3>
+                    <p>Track your earnings and optimize performance</p>
+                    <ul class="feature__list">
+                        <li>Real-time revenue dashboard</li>
+                        <li>Performance insights</li>
+                        <li>Conversion tracking</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <div class="section__header">
+                <h2>Start Earning in Minutes</h2>
+                <p>Choose the plan that fits your content creation goals</p>
+            </div>
+            
+            <div class="pricing__grid">
+                <div class="pricing__card">
+                    <div class="pricing__header">
+                        <h3>Starter</h3>
+                        <div class="pricing__price">
+                            <span class="price">$29</span>
+                            <span class="period">/month</span>
+                        </div>
+                        <p>Perfect for beginners</p>
+                    </div>
+                    
+                    <ul class="pricing__features">
+                        <li>✓ 500 AI content generations/month</li>
+                        <li>✓ Basic content templates</li>
+                        <li>✓ Direct sales platform</li>
+                        <li>✓ 10% marketplace commission</li>
+                        <li>✗ Advanced monetization</li>
+                        <li>✗ White-label rights</li>
+                    </ul>
+                    
+                    <button class="button button--outline pricing__button" data-plan="starter">Start Free Trial</button>
+                </div>
+                
+                <div class="pricing__card popular">
+                    <div class="popular-badge">MOST POPULAR</div>
+                    <div class="pricing__header">
+                        <h3>Pro Creator</h3>
+                        <div class="pricing__price">
+                            <span class="price">$79</span>
+                            <span class="period">/month</span>
+                        </div>
+                        <p>For serious content entrepreneurs</p>
+                    </div>
+                    
+                    <ul class="pricing__features">
+                        <li>✓ 2,000 AI content generations/month</li>
+                        <li>✓ All content templates</li>
+                        <li>✓ Direct sales + subscriptions</li>
+                        <li>✓ 5% marketplace commission</li>
+                        <li>✓ Affiliate program access</li>
+                        <li>✓ Basic white-label rights</li>
+                    </ul>
+                    
+                    <button class="button button--primary pricing__button" data-plan="pro">Start Free Trial</button>
+                </div>
+                
+                <div class="pricing__card">
+                    <div class="pricing__header">
+                        <h3>Agency</h3>
+                        <div class="pricing__price">
+                            <span class="price">$199</span>
+                            <span class="period">/month</span>
+                        </div>
+                        <p>For teams and agencies</p>
+                    </div>
+                    
+                    <ul class="pricing__features">
+                        <li>✓ 10,000 AI content generations/month</li>
+                        <li>✓ All templates + custom workflows</li>
+                        <li>✓ All monetization methods</li>
+                        <li>✓ 0% marketplace commission</li>
+                        <li>✓ Advanced affiliate program</li>
+                        <li>✓ Full white-label rights</li>
+                    </ul>
+                    
+                    <button class="button button--outline pricing__button" data-plan="agency">Start Free Trial</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta__content">
+                <h2>Ready to Transform Content into Revenue?</h2>
+                <p>Join thousands of creators already earning passive income with AI</p>
+                <div class="cta__buttons">
+                    <button class="button button--primary button--large">Start Your Free Trial</button>
+                    <button class="button button--secondary button--large">Book a Demo</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__section">
+                    <div class="footer__logo">
+                        <div class="logo">AI</div>
+                        <span>ContentFactory AI</span>
+                    </div>
+                    <p>Turning AI content creation into sustainable passive income for creators worldwide.</p>
+                </div>
+                
+                <div class="footer__section">
+                    <h4>Platform</h4>
+                    <ul>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Use Cases</a></li>
+                        <li><a href="#">API Docs</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer__section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Tutorials</a></li>
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">Help Center</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer__section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Legal</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer__bottom">
+                <p>&copy; 2024 ContentFactory AI. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal__content">
+            <span class="modal__close">&times;</span>
+            <h3>Start Your Free Trial</h3>
+            <div id="checkout-form">
+                <div class="payment-loading">
+                    <p>Loading secure checkout...</p>
+                    <p>This would redirect to Stripe in a live implementation</p>
+                    <button class="button button--primary" onclick="simulatePaymentSuccess()">Simulate Payment Success</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile Navigation
+        const navToggle = document.getElementById('nav-toggle');
+        const navMenu = document.getElementById('nav-menu');
+
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav__link').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Pricing Plan Selection
+        document.querySelectorAll('.pricing__button').forEach(button => {
+            button.addEventListener('click', function() {
+                const plan = this.getAttribute('data-plan');
+                openPaymentModal(plan);
+            });
+        });
+
+        // Payment Modal
+        const modal = document.getElementById('paymentModal');
+        const closeModal = document.querySelector('.modal__close');
+
+        function openPaymentModal(plan) {
+            modal.style.display = 'flex';
+            initializeStripeCheckout(plan);
+        }
+
+        closeModal.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animate elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const elementsToAnimate = document.querySelectorAll('.feature__card, .pricing__card');
+            elementsToAnimate.forEach(el => {
+                observer.observe(el);
+            });
+        });
+
+        // Initialize Stripe checkout
+        function initializeStripeCheckout(plan) {
+            const checkoutForm = document.getElementById('checkout-form');
+            
+            checkoutForm.innerHTML = `
+                <div class="payment-loading">
+                    <p>Setting up secure checkout for ${plan} plan...</p>
+                    <p>This would redirect to Stripe in a live implementation</p>
+                    <button class="button button--primary" onclick="simulatePaymentSuccess('${plan}')">Simulate Payment Success</button>
+                </div>
+            `;
+        }
+
+        // Simulate payment success for demo
+        function simulatePaymentSuccess(plan) {
+            modal.style.display = 'none';
+            alert(`🎉 Welcome to ContentFactory AI! Your ${plan} plan has been activated.\n\nYou can now start creating and monetizing content!`);
+        }
+
+        // Add some interactive animations to the dashboard
+        setInterval(() => {
+            const generatingItem = document.querySelector('.generating .preview-status');
+            if (generatingItem) {
+                generatingItem.textContent = 'Generating' + '.'.repeat(Math.floor(Date.now() / 500) % 4);
+            }
+        }, 500);
+    </script>
+</body>
+</html>
